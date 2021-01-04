@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block head %}{% endblock %}
 {% block body %}
-    <img id="img_ball" src="../assets/images/video_game_ball.png" />
-    <img id="blue_brick" src="../assets/images/blue_brick.png" />
-    <img id="green_brick" src="../assets/images/green_brick.png" />
-    <img id="red_brick" src="../assets/images/red_brick.png" />
+    <img id="img_ball" src="{{ url_for('static', filename='assets/images/video_game_ball.png')}}" />
+    <img id="blue_brick" src="{{ url_for('static', filename='assets/images/blue_brick.png')}}" />
+    <img id="green_brick" src="{{ url_for('static', filename='assets/images/green_brick.png')}}" />
+    <img id="red_brick" src="{{ url_for('static', filename='assets/images/red_brick.png')}}" />
     <div id="app"></div>
 
     <canvas id="screen"></canvas>
-    <script src="{{ url_for('static', filename='javascript/index.js')}}"></script>
+    <script type= "module" src="{{ url_for('static', filename='javascript/index.js')}}"></script>
 {% endblock %}

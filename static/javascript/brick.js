@@ -7,6 +7,7 @@ export default class Brick {
     } else if (color === "red") {
       this.brick_img = document.getElementById("red_brick");
     }
+    //this.brick_img = document.getElementById("blue_brick");
     this.width = screen_width / 10;
     this.height = (this.width / 31) * 14;
     this.position = position;

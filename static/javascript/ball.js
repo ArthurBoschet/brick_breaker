@@ -16,7 +16,7 @@ export default class Ball {
     };
   }
 
-  update(dt, paddle) {
+  update(dt, paddle, brickarray) {
     if (!dt) return;
     this.position.x += this.speed.x / dt;
     this.position.y += this.speed.y / dt;
@@ -35,7 +35,7 @@ export default class Ball {
       );
 
       if (x2 - x1 < 0 || y2 - y1 < 0) {
-        return;
+        return false;
       } else {
         if (x2 - x1 > y2 - y1) {
           if (ball.position.y < object.position.y) {
@@ -55,6 +55,7 @@ export default class Ball {
           //ball.speed.x = -ball.speed.x + object.speed;
         }
       }
+      return true;
     };
 
     let wall_collision = function (ball) {
@@ -76,7 +77,18 @@ export default class Ball {
       }
     };
 
-    object_collision(paddle, this);
+    let col
+    col = object_collision(paddle, this);
+    for(let i=0; i<brickarray.length; i++){
+      for(let j=0; j<brickarray[i].length; j++){
+        col = object_collision(brickarray[i][j],this);
+        if (col){
+          brickarray[i].splice(j, 1);
+        }
+      }
+    }
+
+
     wall_collision(this);
   }
 
