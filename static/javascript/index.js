@@ -1,8 +1,8 @@
-import "./styles.css";
-import Paddle from "/src/paddle";
-import InputHandler from "/src/input";
-import Ball from "/src/ball";
-import Brick from "/src/brick";
+import "../CSS/styles.css";
+import Paddle from "/javascript/paddle";
+import InputHandler from "/javascript/input";
+import Ball from "/javascript/ball";
+import Brick from "/javascript/brick";
 
 //canvas setup
 let canvas = document.getElementById("screen");
