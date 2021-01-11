@@ -1,19 +1,19 @@
 export default class Paddle {
-  constructor(screen_width, screen_height) {
-    this.screenwidth = screen_width;
-    this.screenheight = screen_height;
-    this.width = screen_width * 0.2;
-    this.height = screen_height * 0.05;
-    this.maxspeed = 50;
+  constructor(game) {
+    this.screenwidth = game.game_width;
+    this.screenheight = game.game_height;
+    this.width = game.game_width * 0.2;
+    this.height = game.game_height * 0.05;
+    this.maxspeed = Math.floor(250*game.game_width/1440);
     this.speed = 0;
     this.position = {
-      x: (screen_width - this.width) / 2,
-      y: screen_height - this.height - 5
+      x: (game.game_width - this.width) / 2,
+      y: game.game_height - this.height - 5
     };
   }
 
   draw(ctx) {
-    ctx.fillStyle = "#00f";
+    ctx.fillStyle = "#36d1dc";
     ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
   }
 

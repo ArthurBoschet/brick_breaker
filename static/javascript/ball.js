@@ -1,22 +1,27 @@
 export default class Ball {
-  constructor(screen_width, screen_height) {
+  constructor(game) {
     this.img_ball = document.getElementById("img_ball");
-    this.screenwidth = screen_width;
-    this.screenheight = screen_height;
-    this.diameter = screen_width * 0.03;
+    this.game = game;
+    this.screenwidth = game.game_width;
+    this.screenheight = game.game_height;
+    this.diameter = game.game_width * 0.03;
     this.height = this.diameter;
-    this.maxspeed = 30;
+    this.maxspeed = Math.floor(180*game.game_width/1440);
+    this.x_speed = Math.floor(300*game.game_height/1440);
     this.speed = {
-      x: 0,
+      x: (Math.random()<0.5)? this.x_speed: -this.x_speed,
       y: this.maxspeed
     };
     this.position = {
-      x: (screen_width - this.diameter) / 2,
-      y: 5
+      x: (game.game_width - this.diameter) / 2,
+      y: this.screenheight/7
     };
   }
 
-  update(dt, paddle, brickarray) {
+  update(dt) {
+    let paddle = this.game.paddle;
+    let brickarray = this.game.brickgrid;
+
     if (!dt) return;
     this.position.x += this.speed.x / dt;
     this.position.y += this.speed.y / dt;
@@ -47,12 +52,11 @@ export default class Ball {
         } else {
           if (ball.position.x < object.position.x) {
             ball.position.x = object.position.x - ball.diameter;
-            ball.speed.x = -50;
+            ball.speed.x = -ball.x_speed;
           } else {
             ball.position.x = object.position.x + object.width;
-            ball.speed.x = 50;
+            ball.speed.x = ball.x_speed;
           }
-          //ball.speed.x = -ball.speed.x + object.speed;
         }
       }
       return true;
@@ -72,18 +76,19 @@ export default class Ball {
         ball.speed.x = -ball.speed.x;
       }
       if (ball.position.y > ball.screenheight - ball.diameter) {
-        ball.position.y = ball.screenheight - ball.diameter;
-        ball.speed.y = -ball.speed.y;
+        //intialize to game over
+        ball.game.initialize(3);
       }
     };
 
     let col
     col = object_collision(paddle, this);
-    for(let i=0; i<brickarray.length; i++){
-      for(let j=0; j<brickarray[i].length; j++){
-        col = object_collision(brickarray[i][j],this);
+    for(let i=0; i<brickarray.array.length; i++){
+      for(let j=0; j<brickarray.array[i].length; j++){
+        col = object_collision(brickarray.array[i][j],this);
+        
         if (col){
-          brickarray[i].splice(j, 1);
+          brickarray.delete(i,j);
         }
       }
     }
